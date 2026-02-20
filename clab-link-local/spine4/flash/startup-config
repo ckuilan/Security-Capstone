@@ -1,0 +1,101 @@
+! Startup-config last modified at Sun Feb 15 08:20:12 2026 by root
+! device: spine4 (cEOSLab, EOS-4.35.1F-45319759.4351F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$W7UBgVTk033yJNO2$lnWtSF87E8OO.YsvZvv595v7ptbpXwMZYvqBbnb/CjyaZJDQ/XBy7ndgd5TSorXWvULdbEm6imk/lqjHWYZfM1
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname spine4
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet3
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet4
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet5
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet6
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Loopback0
+   ip address 192.168.0.4/32
+   ipv6 address 2001::4898:192:168:0:4/128
+!
+interface Management0
+   ip address 172.20.30.6/24
+!
+ip routing ipv6 interfaces 
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.30.1
+!
+router bgp 64661
+   router-id 192.168.0.4
+   no bgp default ipv4-unicast
+   neighbor bl-lla peer group
+   neighbor bl-lla route-map default-bl-lla-v4-in in
+   neighbor bl-lla route-map default-bl-lla-v4-out out
+   neighbor bl-lla send-community standard extended
+   neighbor leaf-lla peer group
+   neighbor leaf-lla route-map default-leaf-lla-v4-in in
+   neighbor leaf-lla route-map default-leaf-lla-v4-out out
+   neighbor leaf-lla send-community standard extended
+   neighbor interface Et1-2 peer-group bl-lla remote-as 64660
+   neighbor interface Et3 peer-group leaf-lla remote-as 64662
+   neighbor interface Et4 peer-group leaf-lla remote-as 64663
+   neighbor interface Et5 peer-group leaf-lla remote-as 64664
+   neighbor interface Et6 peer-group leaf-lla remote-as 64665
+   !
+   address-family ipv4
+      neighbor bl-lla activate
+      neighbor bl-lla next-hop address-family ipv6 originate
+      neighbor leaf-lla activate
+      neighbor leaf-lla next-hop address-family ipv6 originate
+      network 192.168.0.4/32
+   !
+   address-family ipv6
+      neighbor bl-lla activate
+      neighbor leaf-lla activate
+      network 2001::4898:192:168:0:4/128
+!
+end

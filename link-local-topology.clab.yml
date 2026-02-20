@@ -1,0 +1,106 @@
+name: link-local
+
+
+mgmt:
+  network: capstone-mgmt
+  ipv4-subnet: 172.20.30.0/24
+
+topology:
+  nodes:
+    ss3:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "65100"
+      startup-config: clab-link-local/ss3/startup.conf
+
+    ss4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "65100"
+      startup-config: clab-link-local/ss4/startup.conf
+
+
+    spine3:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine3/startup.conf
+
+    spine4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine4/startup.conf
+
+ 
+    leaf4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65001"
+      startup-config: clab-link-local/leaf4/startup.conf
+
+    leaf5:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65002"
+      startup-config: clab-link-local/leaf5/startup.conf
+
+    leaf6:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65003"
+      startup-config: clab-link-local/leaf6/startup.conf
+
+    pa-firewall:
+      kind: paloalto_panos
+      image: vrnetlab/paloalto_pa-vm:11.1.6-h10
+      labels:
+        role: firewall
+
+    linux-db-syslog:
+      kind: linux
+      image: linux-db-syslog:final
+      labels:
+        role: linux-server
+      binds:
+        - clab-link-local/linux-db-syslog/entrypoint.sh:/startup.sh
+      cmd: bash /startup.sh
+
+    pnet0:
+      kind: bridge
+
+  links:
+    - endpoints: [ "pa-firewall:Ethernet1/1", "pnet0:eth2" ]
+    - endpoints: [ "linux-db-syslog:eth1", "pnet0:eth3" ]
+
+    # SS3 to Spines
+    - endpoints: [ "ss3:eth1", "spine3:eth1" ]
+    - endpoints: [ "ss3:eth2", "spine4:eth1" ]
+    - endpoints: [ "ss3:eth5", "pa-firewall:Ethernet1/2" ]
+    # SS4 to Spines
+    - endpoints: [ "ss4:eth1", "spine3:eth2" ]
+    - endpoints: [ "ss4:eth2", "spine4:eth2" ]
+    - endpoints: [ "ss4:eth5", "pa-firewall:Ethernet1/3" ]
+
+    # # Spine3 to Leafs
+    - endpoints: [ "spine3:eth3", "leaf4:eth1" ]
+    - endpoints: [ "spine3:eth4", "leaf5:eth1" ]
+    - endpoints: [ "spine3:eth5", "leaf6:eth1" ]
+    # Spine4 to Leafs
+    - endpoints: [ "spine4:eth3", "leaf4:eth2" ]
+    - endpoints: [ "spine4:eth4", "leaf5:eth2" ]
+    - endpoints: [ "spine4:eth5", "leaf6:eth2" ]

@@ -1,0 +1,51 @@
+---
+pnet0:
+    username: 
+    password: 
+    platform: bridge
+    hostname: 
+leaf4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.8
+leaf5:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.5
+leaf6:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.4
+spine3:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.9
+spine4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.6
+ss3:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.10
+ss4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.3
+linux-db-syslog:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.30.2
+pa-firewall:
+    username: admin
+    password: Admin@123
+    platform: paloalto_panos
+    hostname: 172.20.30.7

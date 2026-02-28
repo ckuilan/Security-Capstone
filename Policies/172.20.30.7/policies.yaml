@@ -1,9 +1,9 @@
-generated_at: '2026-02-28T14:56:48.006093'
+generated_at: '2026-02-28T15:56:34.059435'
 policies:
 - action: allow
   application:
   - any
-  description: Auto-generated from traffic logs (3954 hits in 24h)
+  description: Auto-generated from traffic logs (3881 hits in 24h)
   destination:
   - 172.16.1.44
   enabled: true
@@ -11,15 +11,15 @@ policies:
   logging: true
   metadata:
     dst_port: '514'
-    generated_at: '2026-02-28T14:56:48.003093'
-    hits: 3954
+    generated_at: '2026-02-28T15:56:34.056952'
+    hits: 3881
     hours_back: 24
     src_port: '53609'
     threshold: 100
     traffic_ports:
     - '53609'
     - '514'
-  name: auto-192-168-0-7-to-172-16-1-44-3954-20260228
+  name: auto-192-168-0-7-to-172-16-1-44-3881-20260228
   service:
   - any
   source:
@@ -28,7 +28,7 @@ policies:
 - action: allow
   application:
   - any
-  description: Auto-generated from traffic logs (294 hits in 24h)
+  description: Auto-generated from traffic logs (287 hits in 24h)
   destination:
   - 172.16.1.44
   enabled: true
@@ -36,15 +36,15 @@ policies:
   logging: true
   metadata:
     dst_port: '514'
-    generated_at: '2026-02-28T14:56:48.003093'
-    hits: 294
+    generated_at: '2026-02-28T15:56:34.056952'
+    hits: 287
     hours_back: 24
     src_port: '55290'
     threshold: 100
     traffic_ports:
     - '55290'
     - '514'
-  name: auto-192-168-0-7-to-172-16-1-44-294-20260228
+  name: auto-192-168-0-7-to-172-16-1-44-287-20260228
   service:
   - any
   source:

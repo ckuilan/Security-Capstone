@@ -1,0 +1,25 @@
+action: allow
+application:
+- any
+description: Auto-generated from traffic logs (3954 hits in 24h)
+destination:
+- 172.16.1.44
+enabled: true
+from_zone: default
+logging: true
+metadata:
+  dst_port: '514'
+  generated_at: '2026-02-28T14:56:48.003093'
+  hits: 3954
+  hours_back: 24
+  src_port: '53609'
+  threshold: 100
+  traffic_ports:
+  - '53609'
+  - '514'
+name: auto-192-168-0-7-to-172-16-1-44-3954-20260228
+service:
+- any
+source:
+- 192.168.0.7
+to_zone: default

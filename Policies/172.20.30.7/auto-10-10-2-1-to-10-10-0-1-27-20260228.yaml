@@ -1,0 +1,25 @@
+action: allow
+application:
+- any
+description: Auto-generated from traffic logs (27 hits in 24h)
+destination:
+- 10.10.0.1
+enabled: true
+from_zone: tenant-c
+logging: true
+metadata:
+  dst_port: '0'
+  generated_at: '2026-02-28T16:00:54.475510'
+  hits: 27
+  hours_back: 24
+  src_port: '0'
+  threshold: 20
+  traffic_ports:
+  - '0'
+  - '0'
+name: auto-10-10-2-1-to-10-10-0-1-27-20260228
+service:
+- any
+source:
+- 10.10.2.1
+to_zone: tenant-a

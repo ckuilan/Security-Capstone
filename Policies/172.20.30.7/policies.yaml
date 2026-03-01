@@ -1,5 +1,5 @@
 policies:
-- name: auto-10-10-1-1-to-10-10-0-1-49-20260228
+- name: auto-10-10-1-1-to-10-10-0-1-49-20260301
   from:
   - tenant-b
   to:
@@ -13,7 +13,7 @@ policies:
   application:
   - any
   action: allow
-- name: auto-10-10-2-1-to-10-10-0-1-32-20260228
+- name: auto-10-10-2-1-to-10-10-0-1-31-20260301
   from:
   - tenant-c
   to:
@@ -27,7 +27,7 @@ policies:
   application:
   - any
   action: allow
-- name: auto-10-10-0-1-to-10-10-2-1-29-20260228
+- name: auto-10-10-0-1-to-10-10-2-1-29-20260301
   from:
   - tenant-a
   to:

@@ -1,53 +1,78 @@
-generated_at: '2026-02-28T14:56:48.006093'
+generated_at: '2026-02-28T16:00:54.479511'
 policies:
 - action: allow
   application:
   - any
-  description: Auto-generated from traffic logs (3954 hits in 24h)
+  description: Auto-generated from traffic logs (39 hits in 24h)
   destination:
-  - 172.16.1.44
+  - 10.10.0.1
   enabled: true
-  from_zone: default
+  from_zone: tenant-b
   logging: true
   metadata:
-    dst_port: '514'
-    generated_at: '2026-02-28T14:56:48.003093'
-    hits: 3954
+    dst_port: '0'
+    generated_at: '2026-02-28T16:00:54.475510'
+    hits: 39
     hours_back: 24
-    src_port: '53609'
-    threshold: 100
+    src_port: '0'
+    threshold: 20
     traffic_ports:
-    - '53609'
-    - '514'
-  name: auto-192-168-0-7-to-172-16-1-44-3954-20260228
+    - '0'
+    - '0'
+  name: auto-10-10-1-1-to-10-10-0-1-39-20260228
   service:
   - any
   source:
-  - 192.168.0.7
-  to_zone: default
+  - 10.10.1.1
+  to_zone: tenant-a
 - action: allow
   application:
   - any
-  description: Auto-generated from traffic logs (294 hits in 24h)
+  description: Auto-generated from traffic logs (27 hits in 24h)
   destination:
-  - 172.16.1.44
+  - 10.10.0.1
   enabled: true
-  from_zone: default
+  from_zone: tenant-c
   logging: true
   metadata:
-    dst_port: '514'
-    generated_at: '2026-02-28T14:56:48.003093'
-    hits: 294
+    dst_port: '0'
+    generated_at: '2026-02-28T16:00:54.475510'
+    hits: 27
     hours_back: 24
-    src_port: '55290'
-    threshold: 100
+    src_port: '0'
+    threshold: 20
     traffic_ports:
-    - '55290'
-    - '514'
-  name: auto-192-168-0-7-to-172-16-1-44-294-20260228
+    - '0'
+    - '0'
+  name: auto-10-10-2-1-to-10-10-0-1-27-20260228
   service:
   - any
   source:
-  - 192.168.0.7
-  to_zone: default
-total_policies: 2
+  - 10.10.2.1
+  to_zone: tenant-a
+- action: allow
+  application:
+  - any
+  description: Auto-generated from traffic logs (24 hits in 24h)
+  destination:
+  - 10.10.2.1
+  enabled: true
+  from_zone: tenant-a
+  logging: true
+  metadata:
+    dst_port: '0'
+    generated_at: '2026-02-28T16:00:54.475510'
+    hits: 24
+    hours_back: 24
+    src_port: '0'
+    threshold: 20
+    traffic_ports:
+    - '0'
+    - '0'
+  name: auto-10-10-0-1-to-10-10-2-1-24-20260228
+  service:
+  - any
+  source:
+  - 10.10.0.1
+  to_zone: tenant-c
+total_policies: 3

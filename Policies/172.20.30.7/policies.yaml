@@ -1,9 +1,9 @@
 policies:
 - name: auto-10-10-1-1-to-10-10-0-1-49-20260228
   from:
-  - trust
+  - tenant-b
   to:
-  - untrust
+  - tenant-a
   source:
   - 10.10.1.1
   destination:
@@ -15,9 +15,9 @@ policies:
   action: allow
 - name: auto-10-10-2-1-to-10-10-0-1-32-20260228
   from:
-  - trust
+  - tenant-c
   to:
-  - untrust
+  - tenant-a
   source:
   - 10.10.2.1
   destination:
@@ -29,9 +29,9 @@ policies:
   action: allow
 - name: auto-10-10-0-1-to-10-10-2-1-29-20260228
   from:
-  - trust
+  - tenant-a
   to:
-  - untrust
+  - tenant-c
   source:
   - 10.10.0.1
   destination:

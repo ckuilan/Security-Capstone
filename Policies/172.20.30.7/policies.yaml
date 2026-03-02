@@ -1,55 +1,41 @@
 policies:
-- action: allow
-  application:
-  - any
-  destination:
-  - 10.10.0.1
+- name: 10.10.1.1-to-10.10.0.1
   from:
   - tenant-b
-  name: auto-10-10-1-1-to-10-10-0-1-49-20260301
-  service:
-  - application-default
+  to:
+  - tenant-a
   source:
   - 10.10.1.1
-  to:
-  - tenant-a
-- action: allow
-  application:
-  - any
   destination:
   - 10.10.0.1
-  from:
-  - tenant-c
-  name: auto-10-10-2-1-to-10-10-0-1-30-20260301
   service:
   - application-default
-  source:
-  - 10.10.2.1
-  to:
-  - tenant-a
-- action: allow
   application:
   - any
-  destination:
-  - 172.16.1.44
+  action: allow
+- name: 10.10.2.1-to-10.10.0.1
   from:
-  - default
-  name: auto-192-168-0-7-to-172-16-1-44-20-20260301
+  - tenant-c
+  to:
+  - tenant-a
+  source:
+  - 10.10.2.1
+  destination:
+  - 10.10.0.1
   service:
   - application-default
-  source:
-  - 192.168.0.7
-  to:
-  - default
-- name: test
-  source:
-  - 10.0.0.0
-  destination:
-  - 10.0.0.1
+  application:
+  - any
+  action: allow
+- name: 10.10.0.1-to-10.10.2.1
   from:
-  - default
+  - tenant-a
   to:
-  - default
+  - tenant-c
+  source:
+  - 10.10.0.1
+  destination:
+  - 10.10.2.1
   service:
   - application-default
   application:

@@ -3,7 +3,7 @@ COUCHDB_DATABASE = "pa-logs"
 COUCHDB_USERNAME = "admin"
 COUCHDB_PASSWORD = "password123"
 DISCOVERY_RULE_FILTER = "Discovery-Rule"
-POLICY_THRESHOLD = 20  # Minimum hits to generate a policy
+POLICY_THRESHOLD = 20
 
 
 GITHUB_API_BASE = "https://api.github.com"
@@ -43,3 +43,4 @@ DISCOVERY_RULE_XML = """<entry name='Discovery-Rule'>
     <log-setting>logs</log-setting>
     <description>Discovery rule - permits all traffic for flow analysis and policy generation</description>
 </entry>"""
+

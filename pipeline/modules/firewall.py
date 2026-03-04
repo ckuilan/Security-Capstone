@@ -93,7 +93,6 @@ class FirewallManager:
     def deploy_policy(self, policy: dict) -> bool:
         policy_name = policy['name']
         
-        # Build policy XML
         policy_xml = f"""<entry name='{policy_name}'>
     <to><member>{policy['to'][0] if policy.get('to') else 'any'}</member></to>
     <from><member>{policy['from'][0] if policy.get('from') else 'any'}</member></from>
@@ -190,4 +189,5 @@ class FirewallManager:
             else:
                 existing_count += 1
         
+
         return new_policies, existing_count

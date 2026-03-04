@@ -19,7 +19,6 @@ class RuleValidator:
                 'rules': []
             }
         
-        # Analyze rule positions
         auto_policies = [r for r in rules if r.startswith(config.AUTO_POLICY_PREFIX)]
         discovery_rule_pos = None
         auto_policy_positions = []
@@ -98,3 +97,4 @@ class RuleValidator:
             report += f"{verification['message']}\n"
         
         return report
+

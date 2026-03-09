@@ -73,7 +73,7 @@ topology:
 
     linux-db-syslog:
       kind: linux
-      image: linux-db-syslog:final
+      image: linux-db-syslog:snapshot
       labels:
         role: linux-server
       binds:

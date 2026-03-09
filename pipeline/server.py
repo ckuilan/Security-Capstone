@@ -60,7 +60,7 @@ def dashboard():
 def generate():
     def run_task():
         try:
-            cmd = ['python', 'pipeline.py', 'generate',
+            cmd = ['python3', 'pipeline.py', 'generate',
                    '--couchdb-url', 'http://172.20.30.2:5984']
             result = subprocess.run(
                 cmd,
@@ -104,7 +104,7 @@ def github_upload():
     
     def run_task():
         try:
-            cmd = ['python', 'pipeline.py', 'github-upload',
+            cmd = ['python3', 'pipeline.py', 'github-upload',
                    '--github-token', github_token,
                    '--firewall-name', firewall_name,
                    '--branch', branch]
@@ -146,7 +146,7 @@ def deploy():
     
     def run_task():
         try:
-            cmd = ['python', 'pipeline.py', 'deploy',
+            cmd = ['python3', 'pipeline.py', 'deploy',
                    '--github-token', github_token,
                    '--firewall-ip', firewall_ip,
                    '--firewall-name', firewall_name,
@@ -178,7 +178,7 @@ def validate():
     def run_task():
         try:
             result = subprocess.run(
-                ['python', 'pipeline.py', 'validate', '--firewall-ip', '172.20.30.7'],
+                ['python3', 'pipeline.py', 'validate', '--firewall-ip', '172.20.30.7'],
                 capture_output=True,
                 text=True,
                 encoding='utf-8',

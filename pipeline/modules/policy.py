@@ -9,12 +9,12 @@ class PolicyManager:
     def __init__(self, threshold: int = None):
         self.threshold = threshold or config.POLICY_THRESHOLD
     
-    def generate_policies_from_logs(self, logs: List[Dict], firewall_manager=None) -> List[Dict]:
+    def generate_policies_from_logs(self, logs: List[Dict], firewall_manager=None) -> tuple:
         
         logs = [log for log in logs if log.get('rule_name') == config.DISCOVERY_RULE_FILTER]
         
         if not logs:
-            return []
+            return [], 0
         
         traffic_flows = {}
         zone_mapping = {}
@@ -54,13 +54,15 @@ class PolicyManager:
             
             policies.append(policy)
         
+        existing_count = 0
         if firewall_manager is not None:
-            policies = self._filter_existing_policies(policies, firewall_manager)
+            policies, existing_count = self._filter_existing_policies(policies, firewall_manager)
         
-        return policies
+        return policies, existing_count
     
-    def _filter_existing_policies(self, policies: List[Dict], firewall_manager) -> List[Dict]:
+    def _filter_existing_policies(self, policies: List[Dict], firewall_manager) -> tuple:
         new_policies = []
+        existing_count = 0
         
         try:
             existing_rules = firewall_manager.get_all_rules()
@@ -80,10 +82,12 @@ class PolicyManager:
                 
                 if src and dst and (src, dst) not in existing_source_dests:
                     new_policies.append(policy)
+                elif src and dst:
+                    existing_count += 1
         except Exception:
-            return policies
+            return policies, 0
         
-        return new_policies
+        return new_policies, existing_count
     
     def policies_to_yaml(self, policies: List[Dict]) -> str:
         data = {'policies': policies}

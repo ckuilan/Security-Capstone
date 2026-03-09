@@ -46,20 +46,34 @@ class SecurityPipeline:
         
         generated_firewalls = []
         policy_counts = {}
+        existing_counts = {}
         
         for fw_name, fw_logs in firewalls_found.items():
-            policies = self.policy_mgr.generate_policies_from_logs(fw_logs, firewall_manager=self.firewall)
+            policies, existing_count = self.policy_mgr.generate_policies_from_logs(fw_logs, firewall_manager=self.firewall)
             
             if policies:
                 filename = f"staged-policies-{fw_name}.yaml"
                 self.policy_mgr.save_policies_file(policies, filename)
                 generated_firewalls.append(fw_name)
                 policy_counts[fw_name] = len(policies)
+                existing_counts[fw_name] = existing_count
+            elif existing_count > 0:
+                existing_counts[fw_name] = existing_count
         
         if not generated_firewalls:
+            if existing_counts:
+                existing_summary = ", ".join([f"{fw} ({existing_counts[fw]} existing)" for fw in existing_counts if existing_counts[fw] > 0])
+                print(f"Generate: {existing_summary} - All discovered policies already exist on firewall")
             return {'success': False, 'firewalls': []}
         
-        summary = ", ".join([f"{fw} ({policy_counts[fw]})" for fw in generated_firewalls])
+        summary_parts = [f"{fw} ({policy_counts[fw]} new" for fw in generated_firewalls]
+        for i, fw in enumerate(generated_firewalls):
+            if fw in existing_counts and existing_counts[fw] > 0:
+                summary_parts[i] += f", {existing_counts[fw]} existing)"
+            else:
+                summary_parts[i] += ")"
+        
+        summary = ", ".join(summary_parts)
         print(f"Generate: {summary}")
         return {'success': True, 'firewalls': generated_firewalls, 'total_policies': sum(policy_counts.values())}
     

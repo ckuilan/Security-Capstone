@@ -17,6 +17,9 @@ DEFAULT_FIREWALL_IP = "172.20.30.7"
 DEFAULT_FIREWALL_USERNAME = "admin"
 DEFAULT_FIREWALL_PASSWORD = "Admin@123"
 
+FIREWALL_IP_MAPPING = {
+    "PA-VM": "172.20.30.7"
+}
 
 REQUESTS_TIMEOUT = 30
 COMMIT_TIMEOUT = 120
@@ -43,4 +46,3 @@ DISCOVERY_RULE_XML = """<entry name='Discovery-Rule'>
     <log-setting>logs</log-setting>
     <description>Discovery rule - permits all traffic for flow analysis and policy generation</description>
 </entry>"""
-

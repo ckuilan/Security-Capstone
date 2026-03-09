@@ -131,8 +131,8 @@ class FirewallManager:
                 except:
                     return True, ''
             return False, ''
-        except:
-            return False, ''    
+        except Exception:
+            return False    
     def rule_exists(self, rule_name: str) -> bool:
         existing_rules = self.get_all_rules()
         return rule_name in existing_rules
@@ -163,7 +163,6 @@ class FirewallManager:
             if entry is None:
                 return {}
             
-            # Extract rule details
             source = [elem.text for elem in entry.findall('.//source/member')]
             destination = [elem.text for elem in entry.findall('.//destination/member')]
             from_zone = [elem.text for elem in entry.findall('.//from/member')]
@@ -189,5 +188,4 @@ class FirewallManager:
             else:
                 existing_count += 1
         
-
         return new_policies, existing_count

@@ -97,4 +97,3 @@ class RuleValidator:
             report += f"{verification['message']}\n"
         
         return report
-

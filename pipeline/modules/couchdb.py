@@ -68,7 +68,6 @@ class CouchDBManager:
         traffic_flows = {}
         
         for log in logs:
-            # Create flow key from source -> destination
             src = log.get('source_ip', 'unknown')
             dst = log.get('destination_ip', 'unknown')
             flow_key = f"{src}-to-{dst}"

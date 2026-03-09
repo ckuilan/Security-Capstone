@@ -16,8 +16,9 @@ class GitHubManager:
         }
         self.base_url = f"{config.GITHUB_API_BASE}/repos/{self.owner}/{self.repo}"
     
-    def fetch_policies(self, branch: str, firewall_ip: str) -> List[Dict]:
-        path = config.GITHUB_POLICY_PATH.format(firewall_ip=firewall_ip)
+    def fetch_policies(self, branch: str, firewall_name: str) -> List[Dict]:
+        firewall_name = firewall_name or "default"
+        path = f"Policies/{firewall_name}/staged-policies.yaml"
         url = f"{self.base_url}/contents/{path}"
         params = {"ref": branch}
         
@@ -41,7 +42,6 @@ class GitHubManager:
             return []
     
     def create_branch(self, branch_name: str, base_branch: str = "main") -> bool:
-        # First get the SHA of the base branch
         url = f"{self.base_url}/git/refs/heads/{base_branch}"
         
         try:
@@ -51,7 +51,6 @@ class GitHubManager:
             
             sha = response.json()['object']['sha']
             
-            # Create new branch
             url = f"{self.base_url}/git/refs"
             data = {
                 "ref": f"refs/heads/{branch_name}",
@@ -66,7 +65,6 @@ class GitHubManager:
     def upload_file(self, path: str, content: str, branch: str, message: str) -> bool:
         url = f"{self.base_url}/contents/{path}"
         
-        # Check if file exists
         params = {"ref": branch}
         try:
             get_response = requests.get(url, headers=self.headers, params=params, timeout=10)
@@ -76,7 +74,6 @@ class GitHubManager:
         except:
             sha = None
         
-        # Prepare data
         data = {
             "message": message,
             "content": base64.b64encode(content.encode()).decode(),
@@ -86,7 +83,6 @@ class GitHubManager:
         if sha:
             data["sha"] = sha
         
-        # Upload
         try:
             response = requests.put(url, json=data, headers=self.headers, timeout=10)
             return response.status_code in [200, 201]

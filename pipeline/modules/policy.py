@@ -11,13 +11,11 @@ class PolicyManager:
     
     def generate_policies_from_logs(self, logs: List[Dict], firewall_manager=None) -> List[Dict]:
         
-
         logs = [log for log in logs if log.get('rule_name') == config.DISCOVERY_RULE_FILTER]
         
         if not logs:
             return []
         
-
         traffic_flows = {}
         zone_mapping = {}
         
@@ -29,17 +27,14 @@ class PolicyManager:
             
             flow_key = (src, dst)
             traffic_flows[flow_key] = traffic_flows.get(flow_key, 0) + 1
-
             if flow_key not in zone_mapping:
                 zone_mapping[flow_key] = (src_zone, dst_zone)
         
-
         significant_flows = {
             flow: count for flow, count in traffic_flows.items()
             if count >= self.threshold
         }
         
-
         policies = []
         
         for (src, dst), count in sorted(significant_flows.items(), key=lambda x: x[1], reverse=True):
@@ -48,8 +43,8 @@ class PolicyManager:
             
             policy = {
                 'name': policy_name,
-                'from': [src_zone], 
-                'to': [dst_zone], 
+                'from': [src_zone],
+                'to': [dst_zone],
                 'source': [src],
                 'destination': [dst],
                 'service': ['application-default'],
@@ -59,7 +54,6 @@ class PolicyManager:
             
             policies.append(policy)
         
-
         if firewall_manager is not None:
             policies = self._filter_existing_policies(policies, firewall_manager)
         
@@ -72,17 +66,14 @@ class PolicyManager:
             existing_rules = firewall_manager.get_all_rules()
             existing_source_dests = set()
             
-
             for rule_name in existing_rules:
                 rule_details = firewall_manager.get_rule_details(rule_name)
                 if rule_details and rule_details.get('source') and rule_details.get('destination'):
-
                     src = rule_details['source'][0] if rule_details['source'] else None
                     dst = rule_details['destination'][0] if rule_details['destination'] else None
                     if src and dst:
                         existing_source_dests.add((src, dst))
             
-
             for policy in policies:
                 src = policy['source'][0] if policy.get('source') else None
                 dst = policy['destination'][0] if policy.get('destination') else None
@@ -90,7 +81,6 @@ class PolicyManager:
                 if src and dst and (src, dst) not in existing_source_dests:
                     new_policies.append(policy)
         except Exception:
-
             return policies
         
         return new_policies
@@ -127,4 +117,3 @@ class PolicyManager:
         for policy in policies:
             summary += f"  • {policy['name']}\n"
         return summary
-

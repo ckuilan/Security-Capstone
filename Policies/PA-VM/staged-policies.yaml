@@ -1,0 +1,29 @@
+policies:
+- name: 10.10.0.1-to-10.10.1.1
+  source:
+  - 10.10.0.1
+  destination:
+  - 10.10.1.1
+  service:
+  - application-default
+  application:
+  - any
+  action: allow
+  from:
+  - tenant-a
+  to:
+  - tenant-b
+- name: 192.168.0.7-to-172.16.1.44
+  source:
+  - 192.168.0.7
+  destination:
+  - 172.16.1.44
+  service:
+  - application-default
+  application:
+  - any
+  action: allow
+  from:
+  - default
+  to:
+  - default

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Security Capstone</h1>
+
+<h2>Run Discovery</h2>
+<form method="POST">
+  <input type="text" name="couchdb_username" placeholder="CouchDB Username" required>
+  <input type="password" name="couchdb_password" placeholder="CouchDB Password" required>
+  <button type="submit" name="action" value="discovery">Run Discovery</button>
+</form>
+
+<h2>Push to GitHub</h2>
+<form method="POST">
+  <input type="text" name="firewall" placeholder="Firewall Name" required>
+  <input type="password" name="token" placeholder="GitHub Token" required>
+  <button type="submit" name="action" value="push">Push to GitHub</button>
+</form>
+
+<h2>Deploy to Firewall</h2>
+<form method="POST">
+  <input type="text" name="firewall" placeholder="Firewall Name" required>
+  <input type="text" name="username" placeholder="Firewall Username" required>
+  <input type="password" name="password" placeholder="Firewall Password" required>
+  <button type="submit" name="action" value="deploy">Deploy to Firewall</button>
+</form>
+
+{% if output %}
+<h2>Script Output</h2>
+<pre>{{ output }}</pre>
+{% endif %}
+
+{% for fw, content in policies.items() %}
+<h2>{{ fw }}</h2>
+<pre>{{ content }}</pre>
+{% endfor %}
+</body>
+</html>

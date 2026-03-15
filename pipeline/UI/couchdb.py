@@ -1,14 +1,14 @@
-import requests, sys, yaml, os
+import requests
 from typing import List, Dict
 from datetime import datetime, timedelta
-
-sys.path.insert(0, '../UI')
 import config
+import yaml
+import os
 
 COUCHDB_URL = config.COUCHDB_URL
 COUCHDB_DATABASE = config.COUCHDB_DATABASE
-COUCHDB_USERNAME = sys.argv[1]
-COUCHDB_PASSWORD = sys.argv[2]
+COUCHDB_USERNAME = config.COUCHDB_USERNAME
+COUCHDB_PASSWORD = config.COUCHDB_PASSWORD
 
 BASE_URL = f"{COUCHDB_URL}/{COUCHDB_DATABASE}"
 AUTH = (COUCHDB_USERNAME, COUCHDB_PASSWORD) if COUCHDB_USERNAME else None

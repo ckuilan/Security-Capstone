@@ -61,7 +61,7 @@ class Firewall_Hits:
 
 
 
-def upload_to_couchdb(hit: Firewall_Hits):
+def upload_to_couchdb(hit):
     url = f"{COUCHDB_URL}/{DB_NAME}"
     data = json.dumps(vars(hit)).encode('utf-8')
     req = urllib.request.Request(url, data=data, headers=headers, method='POST')
@@ -154,11 +154,16 @@ def process_paloalto_log(line):
 
 
 def main():
+    palo_alto_hits = []
+    
     for line in sys.stdin:
         if "PA-VM" in line:
             hit = process_paloalto_log(line)
             if hit:
-                upload_to_couchdb(hit)
+                palo_alto_hits.append(hit)
+
+    for hit in palo_alto_hits:
+        upload_to_couchdb(hit)
 
 
 main()

@@ -14,7 +14,7 @@ def index():
         if action == 'discovery':
             username = request.form.get('couchdb_username')
             password = request.form.get('couchdb_password')
-            result = subprocess.run(['python3', '../modules/couchdb.py', username, password], capture_output=True, text=True)
+            result = subprocess.run(['python3', 'couchdb.py', username, password], capture_output=True, text=True)
             output = result.stdout + result.stderr
         
         elif action == 'push':

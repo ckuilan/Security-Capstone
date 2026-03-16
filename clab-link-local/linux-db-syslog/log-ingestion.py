@@ -161,7 +161,9 @@ def main():
             hit = process_paloalto_log(line)
             if hit:
                 palo_alto_hits.append(hit)
-
+        else:
+            print(f"Unrecognized log format: {line.strip()}. \
+            May need onboarding for missing Firewall platform source parsing.")
     for hit in palo_alto_hits:
         upload_to_couchdb(hit)
 

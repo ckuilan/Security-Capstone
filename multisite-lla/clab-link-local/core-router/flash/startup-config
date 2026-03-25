@@ -1,0 +1,110 @@
+! Startup-config last modified at Wed Mar 25 23:06:53 2026 by root
+! device: core-router (cEOSLab, EOS-4.35.1F-45319759.4351F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$RBgB9OqZS9N5e1Sg$Ru8DtqAEMTXBGfFkCYSkkvZpQAcA7KnHOOeHVX8T0JgrkaAibRbPIB54ZY9l/FUEWcGFkrjsQ2k8Z7NXJf418/
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+service routing protocols model multi-agent
+!
+hostname core-router
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet3
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Ethernet4
+   mtu 9214
+   no switchport
+   ipv6 enable
+!
+interface Loopback0
+   ip address 192.168.0.100/32
+   ipv6 address 2001::4898:192:168:0:100/128
+!
+interface Management0
+   ip address 172.20.30.10/24
+!
+ip routing ipv6 interfaces 
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.30.1
+!
+router bgp 65000
+   router-id 192.168.0.100
+   no bgp default ipv4-unicast
+   neighbor dci-evpn peer group
+   neighbor dci-evpn update-source Loopback0
+   neighbor dci-evpn ebgp-multihop
+   neighbor dci-evpn send-community extended
+   neighbor site1-ss peer group
+   neighbor site1-ss route-map default-site1-ss-v4-in in
+   neighbor site1-ss route-map default-site1-ss-v4-out out
+   neighbor site1-ss send-community standard extended
+   neighbor site2-ss peer group
+   neighbor site2-ss route-map default-site2-ss-v4-in in
+   neighbor site2-ss route-map default-site2-ss-v4-out out
+   neighbor site2-ss send-community standard extended
+   neighbor 192.168.0.1 peer group dci-evpn
+   neighbor 192.168.0.1 remote-as 64660
+   neighbor 192.168.0.3 peer group dci-evpn
+   neighbor 192.168.0.3 remote-as 64660
+   neighbor 192.168.0.5 peer group dci-evpn
+   neighbor 192.168.0.5 remote-as 64665
+   neighbor 192.168.0.6 peer group dci-evpn
+   neighbor 192.168.0.6 remote-as 64665
+   neighbor interface Et1-2 peer-group site1-ss remote-as 64660
+   neighbor interface Et3-4 peer-group site2-ss remote-as 64665
+   !
+   address-family evpn
+      neighbor dci-evpn activate
+   !
+   address-family ipv4
+      neighbor site1-ss activate
+      neighbor site1-ss next-hop address-family ipv6 originate
+      neighbor site2-ss activate
+      neighbor site2-ss next-hop address-family ipv6 originate
+      network 192.168.0.100/32
+   !
+   address-family ipv6
+      neighbor site1-ss activate
+      neighbor site2-ss activate
+      network 2001::4898:192:168:0:100/128
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

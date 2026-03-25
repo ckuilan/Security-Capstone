@@ -1,0 +1,184 @@
+name: link-local
+
+
+mgmt:
+  network: capstone-mgmt
+  ipv4-subnet: 172.20.30.0/24
+
+topology:
+  nodes:
+    ss3:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "65100"
+      startup-config: clab-link-local/ss3/startup.conf
+
+    ss4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "65100"
+      startup-config: clab-link-local/ss4/startup.conf
+
+
+    spine3:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine3/startup.conf
+
+    spine4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine4/startup.conf
+
+ 
+    leaf4:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65001"
+      startup-config: clab-link-local/leaf4/startup.conf
+
+    leaf5:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65002"
+      startup-config: clab-link-local/leaf5/startup.conf
+
+    leaf6:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65003"
+      startup-config: clab-link-local/leaf6/startup.conf
+
+    core-router:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: core
+        asn: "65000"
+      startup-config: clab-link-local/core-router/startup.conf
+
+    # ========================================
+    # SITE 2 - Super Spine Layer (AS 65101)
+    # ========================================
+    ss5:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "64661"
+      startup-config: clab-link-local/ss5/startup.conf
+
+    ss6:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: super-spine
+        asn: "64661"
+      startup-config: clab-link-local/ss6/startup.conf
+
+    # ========================================
+    # SITE 2 - Spine Layer (AS 64661)
+    # ========================================
+    spine5:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine5/startup.conf
+
+    spine6:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: spine
+        asn: "65200"
+      startup-config: clab-link-local/spine6/startup.conf
+
+    # ========================================
+    # SITE 2 - Leaf Layer (AS 64662)
+    # ========================================
+    leaf7:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65004"
+      startup-config: clab-link-local/leaf7/startup.conf
+
+    leaf8:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65005"
+      startup-config: clab-link-local/leaf8/startup.conf
+
+    leaf9:
+      kind: ceos
+      image: ceos:4.35.1F
+      labels:
+        role: leaf
+        asn: "65006"
+      startup-config: clab-link-local/leaf9/startup.conf
+
+  links:
+    # SS3 to Spines
+    - endpoints: [ "ss3:eth1", "spine3:eth1" ]
+    - endpoints: [ "ss3:eth2", "spine4:eth1" ]
+    # SS4 to Spines
+    - endpoints: [ "ss4:eth1", "spine3:eth2" ]
+    - endpoints: [ "ss4:eth2", "spine4:eth2" ]
+
+    # Super-Spine to Core Router
+    - endpoints: [ "ss3:eth3", "core-router:eth1" ]
+    - endpoints: [ "ss4:eth3", "core-router:eth2" ]
+    - endpoints: [ "ss5:eth3", "core-router:eth3" ]
+    - endpoints: [ "ss6:eth3", "core-router:eth4" ]
+
+    # # Spine3 to Leafs
+    - endpoints: [ "spine3:eth3", "leaf4:eth1" ]
+    - endpoints: [ "spine3:eth4", "leaf5:eth1" ]
+    - endpoints: [ "spine3:eth5", "leaf6:eth1" ]
+    # Spine4 to Leafs
+    - endpoints: [ "spine4:eth3", "leaf4:eth2" ]
+    - endpoints: [ "spine4:eth4", "leaf5:eth2" ]
+    - endpoints: [ "spine4:eth5", "leaf6:eth2" ]
+
+    # ========================================
+    # SITE 2 - SPINE TO LEAF CONNECTIONS
+    # ========================================
+    # Spine5 to Leafs
+    - endpoints: [ "spine5:eth3", "leaf7:eth1" ]
+    - endpoints: [ "spine5:eth4", "leaf8:eth1" ]
+    - endpoints: [ "spine5:eth5", "leaf9:eth1" ]
+    # Spine6 to Leafs
+    - endpoints: [ "spine6:eth3", "leaf7:eth2" ]
+    - endpoints: [ "spine6:eth4", "leaf8:eth2" ]
+    - endpoints: [ "spine6:eth5", "leaf9:eth2" ]
+
+    # ========================================
+    # SITE 2 - SUPER SPINE TO SPINE CONNECTIONS
+    # ========================================
+    # SS5 to Spines
+    - endpoints: [ "ss5:eth1", "spine5:eth1" ]
+    - endpoints: [ "ss5:eth2", "spine6:eth1" ]
+    # SS6 to Spines
+    - endpoints: [ "ss6:eth1", "spine5:eth2" ]
+    - endpoints: [ "ss6:eth2", "spine6:eth2" ]

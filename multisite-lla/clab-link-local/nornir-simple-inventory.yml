@@ -1,0 +1,76 @@
+---
+core-router:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.10
+leaf4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.12
+leaf5:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.11
+leaf6:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.13
+leaf7:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.15
+leaf8:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.9
+leaf9:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.5
+spine3:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.4
+spine4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.14
+spine5:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.2
+spine6:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.6
+ss3:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.16
+ss4:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.7
+ss5:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.3
+ss6:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.30.8
